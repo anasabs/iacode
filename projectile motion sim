@@ -1,0 +1,56 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def projectile_motion_sim(initial_speed, angle):
+    # Convert angle to radians if it's in degrees
+    angle = np.radians(angle)
+   
+    # Initial velocity components
+    speed_y = initial_speed * np.sin(angle)
+    speed_x = initial_speed * np.cos(angle)
+   
+    g = 9.8  # Acceleration due to gravity
+    area = np.pi * (0.02135)**2  # Radius of a golf ball (in meters)
+    density = 1.2  # Density of air (kg/m^3)
+    b = 0.5 * density * area  # Drag coefficient for a sphere
+    m = 0.04593  # Mass of a golf ball (kg)
+   
+    rx = 0  # Initial horizontal position
+    ry = 0  # Initial vertical position
+    t = 0.001  # Time step
+    x = []  # List to store horizontal displacement
+    y = []  # List to store vertical displacement
+
+
+    while ry >= 0:
+        speed_mag = np.sqrt(speed_x**2 + speed_y**2)
+       
+        # Drag force calculations
+        a_x = -(b/m) * speed_mag * speed_x  # Horizontal acceleration due to drag
+        a_y = -g - (b/m) * speed_mag * speed_y  # Vertical acceleration (gravity + drag)
+       
+        # Update positions
+        rx += speed_x * t  # Update horizontal position
+        ry += speed_y * t  # Update vertical position
+
+
+        # Update velocities
+        speed_x += a_x * t  # Update horizontal velocity
+        speed_y += a_y * t  # Update vertical velocity
+
+
+        # Append new positions to lists
+        x.append(rx)
+        y.append(ry)
+   
+    # Plot the results
+    plt.plot(x, y)
+    plt.xlabel("Horizontal displacement (m)")
+    plt.ylabel("Vertical displacement (m)")
+    plt.title("Projectile Motion of a Golf Ball")
+    plt.show()
+
+
+#calling the function
+projectile_motion_sim(652.7, 32.9)  # initial speed in m/s, angle in degrees

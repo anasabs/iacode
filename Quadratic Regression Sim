@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Data points
+x = np.array([11.5, 93.32, 160.3, 217.1, 271.8, 321.8, 369.8, 415.3, 447.3])
+y = np.array([-0.955, 54.49, 86.27, 103.9, 107.4, 99.85, 80.85, 52.35, 26.85])
+# To fit the points to a quadratic (the 2 is for the degree of the equation)
+coefficients = np.polyfit(x, y, 2) #plolyfit generates a polynomial regression line
+# Coefficients a, b, and c
+a, b, c = coefficients
+print(f"Equation is: y = {a}x^2 + {b}x + {c}")
+# To plot the data against the regression line
+plt.scatter(x, y, color='red', label='Position points')
+x_fit = np.linspace(min(x), max(x), 100)
+y_fit = a * x_fit**2 + b * x_fit + c
+plt.plot(x_fit, y_fit, label=f'Fit: y = {a:.3f}x^2 + {b:.3f}x + {c:.3f}')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
